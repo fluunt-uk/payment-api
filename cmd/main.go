@@ -1,17 +1,24 @@
 package main
 
 import (
-	"github.com/ProjectReferral/Get-me-in/payment-api/cmd/dep"
-	"github.com/ProjectReferral/Get-me-in/payment-api/configs"
-	"github.com/ProjectReferral/Get-me-in/payment-api/lib/stripe-api/resources/models"
-	"github.com/ProjectReferral/Get-me-in/util"
+	"fmt"
+	"gitlab.com/projectreferral/payment-api/cmd/dep"
+	"gitlab.com/projectreferral/payment-api/configs"
+	"gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/models"
+	"gitlab.com/projectreferral/util/util"
 	"log"
 	"os"
 )
 
 func main() {
 
-	f, err := os.OpenFile("logs/paymentAPI_log.txt", os.O_WRONLY|os.O_CREATE, 0644)
+	path, err := os.Getwd()
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(path)
+
+	f, err := os.OpenFile(path + "/logs/paymentAPI_log.txt", os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

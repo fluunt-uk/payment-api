@@ -1,13 +1,15 @@
 package internal
 
 import (
-	"github.com/ProjectReferral/Get-me-in/payment-api/configs"
-	"github.com/ProjectReferral/Get-me-in/payment-api/internal/service"
-	"github.com/ProjectReferral/Get-me-in/pkg/security"
+	"fmt"
+	"gitlab.com/projectreferral/payment-api/configs"
+	"gitlab.com/projectreferral/payment-api/internal/service"
+	"gitlab.com/projectreferral/util/pkg/security"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 
@@ -33,7 +35,13 @@ func (eb *EndpointBuilder) SetupEndpoints() {
 }
 
 func displayLog(w http.ResponseWriter, r *http.Request){
-	b, _ := ioutil.ReadFile("logs/paymentAPI_log.txt")
+	path, err := os.Getwd()
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(path)
+
+	b, _ := ioutil.ReadFile(path + "/logs/paymentAPI_log.txt")
 
 	w.Write(b)
 }

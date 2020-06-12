@@ -2,9 +2,9 @@ package card
 
 import (
 	"fmt"
-	sub_builder "github.com/ProjectReferral/Get-me-in/payment-api/lib/dynamodb/repo"
-	stripe_api "github.com/ProjectReferral/Get-me-in/payment-api/lib/stripe-api"
-	"github.com/ProjectReferral/Get-me-in/payment-api/lib/stripe-api/resources/models"
+	sub_builder "gitlab.com/projectreferral/payment-api/lib/dynamodb/repo"
+	stripe_api "gitlab.com/projectreferral/payment-api/lib/stripe-api"
+	"gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/models"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/sub"
 	"net/http"

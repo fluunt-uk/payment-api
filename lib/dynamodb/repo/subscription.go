@@ -2,8 +2,8 @@ package repo
 
 import (
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/payment-api/lib/stripe-api/resources/models"
-	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
+	"gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/models"
+	"gitlab.com/projectreferral/util/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 

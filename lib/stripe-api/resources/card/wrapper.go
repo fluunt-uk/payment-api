@@ -1,7 +1,7 @@
 package card
 
 import (
-	stripe_api "github.com/ProjectReferral/Get-me-in/payment-api/lib/stripe-api"
+	stripe_api "gitlab.com/projectreferral/payment-api/lib/stripe-api"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/card"
 	"net/http"
