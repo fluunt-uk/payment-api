@@ -11,7 +11,7 @@ import (
 	sub "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/subscription"
 	token "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/token"
 	"gitlab.com/projectreferral/util/pkg/dynamodb"
-	"gitlab.com/projectreferral/queueing-api/client"
+	"gitlab.com/projectreferral/util/client"
 	"github.com/gorilla/mux"
 	"github.com/stripe/stripe-go"
 	"log"
