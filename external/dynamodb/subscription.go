@@ -1,26 +1,26 @@
-package repo
+package dynamodb
 
 import (
 	"fmt"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/models"
 	"gitlab.com/projectreferral/util/pkg/dynamodb"
-	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-type Wrapper struct {
+type SubRepo struct {
 	//dynamo client
 	DC		*dynamodb.Wrapper
 }
 //implement only the necessary methods for each repository
 //available to be consumed by the API
-type Builder interface{
+type Repo interface{
 	Create(*models.Subscription) (string, error)
 	Del(string) (string, error)
 }
 
 //get all the adverts for a specific account
 //token validated
-func (s *Wrapper) Create(body *models.Subscription) (string, error) {
+func (s *SubRepo) Create(body *models.Subscription) (string, error) {
 
 	av, errM := dynamodbattribute.MarshalMap(body)
 
@@ -38,7 +38,7 @@ func (s *Wrapper) Create(body *models.Subscription) (string, error) {
 	return "Success", err
 }
 
-func (s *Wrapper) Del(email string) (string, error) {
+func (s *SubRepo) Del(email string) (string, error) {
 	err := s.DC.DeleteItem(email)
 
 	if err != nil {

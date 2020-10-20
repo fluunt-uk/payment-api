@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type Builder interface {
+type Client interface {
 	Put(c *stripe.Customer, t *stripe.Token) (*stripe.Card, error)
 	Get(http.ResponseWriter, *http.Request)
 	Del(http.ResponseWriter, *http.Request)
@@ -15,9 +15,9 @@ type Builder interface {
 	GetBatch(http.ResponseWriter, *http.Request)
 }
 
-type Wrapper struct{}
+type APIHelper struct{}
 
-func (cw *Wrapper) Put(c *stripe.Customer, t *stripe.Token) (*stripe.Card, error) {
+func (ah *APIHelper) Put(c *stripe.Customer, t *stripe.Token) (*stripe.Card, error) {
 	params := &stripe.CardParams{
 		Customer: stripe.String(c.ID),
 		Token: stripe.String(t.ID),
@@ -31,7 +31,7 @@ func (cw *Wrapper) Put(c *stripe.Customer, t *stripe.Token) (*stripe.Card, error
 	return card, nil
 }
 
-func (cw *Wrapper) Get(w http.ResponseWriter, r *http.Request)  {
+func (ah *APIHelper) Get(w http.ResponseWriter, r *http.Request)  {
 	params := &stripe.CardParams{
 		Customer: stripe.String("cus_H7EDAZGzu81IFr"),
 	}
@@ -43,7 +43,7 @@ func (cw *Wrapper) Get(w http.ResponseWriter, r *http.Request)  {
 	stripe_api.ReturnSuccessJSON(w, &c)
 }
 
-func (cw *Wrapper) Patch(w http.ResponseWriter, r *http.Request)  {
+func (ah *APIHelper) Patch(w http.ResponseWriter, r *http.Request)  {
 	params := &stripe.CardParams{
 		Customer: stripe.String("cus_H7Dt44weDWU4s5"),
 		Name: stripe.String("Jenny Rosen"),
@@ -56,7 +56,7 @@ func (cw *Wrapper) Patch(w http.ResponseWriter, r *http.Request)  {
 	stripe_api.ReturnSuccessJSON(w, &c)
 }
 
-func (cw *Wrapper) Del(w http.ResponseWriter, r *http.Request)  {
+func (ah *APIHelper) Del(w http.ResponseWriter, r *http.Request)  {
 	params := &stripe.CardParams{
 		Customer: stripe.String("cus_H7Dt44weDWU4s5"),
 	}
@@ -68,7 +68,7 @@ func (cw *Wrapper) Del(w http.ResponseWriter, r *http.Request)  {
 	stripe_api.ReturnSuccessJSON(w, &c)
 }
 
-func (cw *Wrapper) GetBatch(w http.ResponseWriter, r *http.Request)  {
+func (ah *APIHelper) GetBatch(w http.ResponseWriter, r *http.Request)  {
 	params := &stripe.CardListParams{
 		Customer: stripe.String("cus_H7Dt44weDWU4s5"),
 	}

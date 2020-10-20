@@ -8,14 +8,14 @@ import (
 	"net/http"
 )
 
-type Builder interface {
+type Client interface {
 	Put(details models.CardDetails) (*stripe.Token, error)
 	Get(http.ResponseWriter, *http.Request)
 }
 
-type Wrapper struct{}
+type APIHelper struct{}
 
-func (cw *Wrapper) Put(m models.CardDetails) (*stripe.Token, error) {
+func (ah *APIHelper) Put(m models.CardDetails) (*stripe.Token, error) {
 	params := &stripe.TokenParams{
 		Card: &stripe.CardParams{
 			Number: stripe.String(m.Number),
@@ -33,7 +33,7 @@ func (cw *Wrapper) Put(m models.CardDetails) (*stripe.Token, error) {
 	return t, nil
 }
 
-func (cw *Wrapper) Get(w http.ResponseWriter, r *http.Request)  {
+func (ah *APIHelper) Get(w http.ResponseWriter, r *http.Request)  {
 	t, _ := token.Get(
 		"tok_1GUZNNGhy1brUyYInPwRWKkA",
 		nil,

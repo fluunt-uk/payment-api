@@ -4,16 +4,16 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/stripe/stripe-go"
 	"gitlab.com/projectreferral/payment-api/configs"
+	"gitlab.com/projectreferral/payment-api/external/dynamodb"
 	"gitlab.com/projectreferral/payment-api/internal"
+	"gitlab.com/projectreferral/payment-api/internal/rabbitmq"
 	"gitlab.com/projectreferral/payment-api/internal/service"
-	"gitlab.com/projectreferral/payment-api/lib/dynamodb/repo"
-	"gitlab.com/projectreferral/payment-api/lib/rabbitmq"
 	"gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/card"
 	customer "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/customer"
 	sub "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/subscription"
 	token "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/token"
 	rabbit "gitlab.com/projectreferral/util/client/rabbitmq"
-	"gitlab.com/projectreferral/util/pkg/dynamodb"
+	util_dynamo "gitlab.com/projectreferral/util/pkg/dynamodb"
 	"log"
 )
 
@@ -21,7 +21,7 @@ import (
 //and will be used
 type ConfigBuilder interface{
 	SetEnvConfigs()
-	SetDynamoDBConfigsAndBuild() *dynamodb.Wrapper
+	SetDynamoDBConfigsAndBuild() *util_dynamo.Wrapper
 	SetRabbitMQConfigsAndBuild() *rabbit.DefaultQueueClient
 }
 
@@ -43,10 +43,12 @@ func Inject(builder ConfigBuilder){
 	stripe.Key = configs.StripeKey
 
 	subscriptionServ := service.Subscription{
-		CustomerClient: &customer.Wrapper{},
-		SubClient:      &sub.Wrapper{DynamoSubRepo: &repo.Wrapper{DC: dynamoClient}},
-		TokenClient:    &token.Wrapper{},
-		CardClient:     &card.Wrapper{},
+		CustomerClient: &customer.APIHelper{},
+		SubClient:      &sub.APIHelper{},
+		TokenClient:    &token.APIHelper{},
+		CardClient:     &card.APIHelper{},
+		SubscriptionRepo: 	&dynamodb.SubRepo{},
+
 	}
 	log.Println("Loading endpoints...")
 	eb := internal.EndpointBuilder{}

@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-type Builder interface {
+type Client interface {
 	Put(models.Customer) (*stripe.Customer, error)
 	Get(http.ResponseWriter, *http.Request)
 	Del(http.ResponseWriter, *http.Request)
@@ -17,9 +17,9 @@ type Builder interface {
 	GetBatch(http.ResponseWriter, *http.Request)
 }
 
-type Wrapper struct{}
+type APIHelper struct{}
 
-func (cw *Wrapper) Put(m models.Customer) (*stripe.Customer, error){
+func (cr *APIHelper) Put(m models.Customer) (*stripe.Customer, error){
 
 	params := &stripe.CustomerParams{
 		Name: &m.Name,
@@ -34,7 +34,7 @@ func (cw *Wrapper) Put(m models.Customer) (*stripe.Customer, error){
 	return c, nil
 }
 
-func (cw *Wrapper) Get(w http.ResponseWriter, r *http.Request) {
+func (cr *APIHelper) Get(w http.ResponseWriter, r *http.Request) {
 	body := models.Customer{}
 	err := json.NewDecoder(r.Body).Decode(&body)
 	stripe_api.HandleError(err,w)
@@ -44,7 +44,7 @@ func (cw *Wrapper) Get(w http.ResponseWriter, r *http.Request) {
 	stripe_api.ReturnSuccessJSON(w, &c)
 }
 
-func (cw *Wrapper) Patch(w http.ResponseWriter, r *http.Request) {
+func (cr *APIHelper) Patch(w http.ResponseWriter, r *http.Request) {
 	body := models.Customer{}
 	err := json.NewDecoder(r.Body).Decode(&body)
 	stripe_api.HandleError(err,w)
@@ -59,7 +59,7 @@ func (cw *Wrapper) Patch(w http.ResponseWriter, r *http.Request) {
 	stripe_api.ReturnSuccessJSON(w, &c)
 }
 
-func (cw *Wrapper) Del(w http.ResponseWriter, r *http.Request) {
+func (cr *APIHelper) Del(w http.ResponseWriter, r *http.Request) {
 	body := models.Customer{}
 	err := json.NewDecoder(r.Body).Decode(&body)
 	stripe_api.HandleError(err,w)
@@ -69,7 +69,7 @@ func (cw *Wrapper) Del(w http.ResponseWriter, r *http.Request) {
 	stripe_api.ReturnSuccessJSON(w, &c)
 }
 
-func (cw *Wrapper) GetBatch(w http.ResponseWriter, r *http.Request) {
+func (cr *APIHelper) GetBatch(w http.ResponseWriter, r *http.Request) {
 	params := &stripe.CustomerListParams{}
 	params.Filters.AddFilter("limit", "", "3")
 	i := customer.List(params)

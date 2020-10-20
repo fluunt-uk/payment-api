@@ -2,16 +2,17 @@ package service
 
 import (
 	"encoding/json"
+	"github.com/stripe/stripe-go"
 	"gitlab.com/projectreferral/payment-api/configs"
+	"gitlab.com/projectreferral/payment-api/external/dynamodb"
 	"gitlab.com/projectreferral/payment-api/internal/models"
-	"gitlab.com/projectreferral/payment-api/lib/rabbitmq"
+	"gitlab.com/projectreferral/payment-api/internal/rabbitmq"
 	stripe_api "gitlab.com/projectreferral/payment-api/lib/stripe-api"
 	"gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/card"
 	customer "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/customer"
 	sub "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/subscription"
 	token "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/token"
 	"gitlab.com/projectreferral/util/pkg/http_lib"
-	"github.com/stripe/stripe-go"
 	"io/ioutil"
 	"net/http"
 	"sync"
@@ -19,10 +20,11 @@ import (
 )
 
 type Subscription struct {
-	CustomerClient customer.Builder
-	SubClient sub.Builder
-	TokenClient token.Builder
-	CardClient card.Builder
+	CustomerClient   customer.Client
+	SubClient        sub.Client
+	TokenClient      token.Client
+	CardClient       card.Client
+	SubscriptionRepo dynamodb.Repo
 }
 
 type asyncResponse struct {
