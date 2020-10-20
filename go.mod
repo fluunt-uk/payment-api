@@ -7,5 +7,5 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/streadway/amqp v1.0.0
 	github.com/stripe/stripe-go v70.15.0+incompatible
-	gitlab.com/projectreferral/util v0.0.0-20200623155323-9cbd1696e645
+	gitlab.com/projectreferral/util v0.0.0-20201018172522-504d11fb9afc
 )

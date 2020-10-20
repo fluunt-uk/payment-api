@@ -4,16 +4,16 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"fmt"
+	"github.com/streadway/amqp"
 	"gitlab.com/projectreferral/payment-api/configs"
 	resource_model "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/models"
-	"gitlab.com/projectreferral/util/client"
-	qm "gitlab.com/projectreferral/util/client/models"
-	"github.com/streadway/amqp"
+	"gitlab.com/projectreferral/util/client/rabbitmq"
+	qm "gitlab.com/projectreferral/util/client/rabbitmq/models"
 	"log"
 	"net/http"
 )
 
-var Client client.QueueClient
+var Client rabbitmq.QueueClient
 
 func BroadcastNewSubEvent(s resource_model.Subscription) {
 

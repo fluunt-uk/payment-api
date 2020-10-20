@@ -28,8 +28,12 @@ func (eb *EndpointBuilder) InjectSubscriptionServ(ss service.Subscription) {
 
 func (eb *EndpointBuilder) SetupEndpoints() {
 
-	eb.router.HandleFunc("/premium/subscribe", security.WrapHandlerWithSpecialAuth(eb.ss.SubscribeToPremiumPlan, configs.AUTH_AUTHENTICATED)).Methods("POST")
-	eb.router.HandleFunc("/log", displayLog).Methods("GET")
+	eb.router.HandleFunc("/premium/subscribe",
+		security.WrapHandlerWithSpecialAuth(eb.ss.SubscribeToPremiumPlan, configs.AUTH_AUTHENTICATED)).
+		Methods("POST")
+	
+	eb.router.HandleFunc("/log", displayLog).
+		Methods("GET")
 
 	log.Fatal(http.ListenAndServe(configs.PORT, eb.router))
 }

@@ -35,8 +35,6 @@ type asyncResponse struct {
 //1 - create new customer
 //2 - create new token
 //3 - create new sub on the DB
-
-
 //4 - update db record[set premium to true]
 func (s *Subscription) SubscribeToPremiumPlan(w http.ResponseWriter, r *http.Request){
 

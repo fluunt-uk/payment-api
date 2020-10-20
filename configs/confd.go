@@ -32,7 +32,6 @@ const (
 	)
 
 var (
-	//TODO: this key will need to be changed
 	StripeKey = "sk_test_IsdgFVzr2pBjUip3oAzMbI5r007L1vhtUs"
 	BrokerUrl = ""
 )

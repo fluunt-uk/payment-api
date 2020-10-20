@@ -1,6 +1,8 @@
 package dep
 
 import (
+	"github.com/gorilla/mux"
+	"github.com/stripe/stripe-go"
 	"gitlab.com/projectreferral/payment-api/configs"
 	"gitlab.com/projectreferral/payment-api/internal"
 	"gitlab.com/projectreferral/payment-api/internal/service"
@@ -10,32 +12,30 @@ import (
 	customer "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/customer"
 	sub "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/subscription"
 	token "gitlab.com/projectreferral/payment-api/lib/stripe-api/resources/token"
+	rabbit "gitlab.com/projectreferral/util/client/rabbitmq"
 	"gitlab.com/projectreferral/util/pkg/dynamodb"
-	"gitlab.com/projectreferral/util/client"
-	"github.com/gorilla/mux"
-	"github.com/stripe/stripe-go"
 	"log"
 )
 
 //methods that are implemented on util
 //and will be used
 type ConfigBuilder interface{
-	LoadEnvConfigs()
-	LoadDynamoDBConfigs() *dynamodb.Wrapper
-	LoadRabbitMQConfigs() *client.DefaultQueueClient
+	SetEnvConfigs()
+	SetDynamoDBConfigsAndBuild() *dynamodb.Wrapper
+	SetRabbitMQConfigsAndBuild() *rabbit.DefaultQueueClient
 }
 
 func Inject(builder ConfigBuilder){
 
-	builder.LoadEnvConfigs()
+	builder.SetEnvConfigs()
 
 	//setup dynamo library
-	dynamoClient := builder.LoadDynamoDBConfigs()
+	dynamoClient := builder.SetDynamoDBConfigsAndBuild()
 	//connect to the instance
 	log.Println("Connecting to Dynamo Client")
 	dynamoClient.DefaultConnect()
 
-	rabbitMQClient := builder.LoadRabbitMQConfigs()
+	rabbitMQClient := builder.SetRabbitMQConfigsAndBuild()
 	//dependency injection to our resource
 	//we inject the rabbitmq client
 	LoadRabbitMQClient(rabbitMQClient)
@@ -57,7 +57,7 @@ func Inject(builder ConfigBuilder){
 	log.Println("All Dependencies injected")
 }
 
-func LoadRabbitMQClient(c client.QueueClient){
+func LoadRabbitMQClient(c rabbit.QueueClient){
 	log.Println("Injecting RabbitMQ Client")
 	rabbitmq.Client = c
 }

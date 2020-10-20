@@ -23,6 +23,8 @@ github.com/stripe/stripe-go v70.15.0+incompatible h1:hNML7M1zx8RgtepEMlxyu/FpVPr
 github.com/stripe/stripe-go v70.15.0+incompatible/go.mod h1:A1dQZmO/QypXmsL0T8axYZkSN/uA/T/A64pfKdBAMiY=
 gitlab.com/projectreferral/util v0.0.0-20200623155323-9cbd1696e645 h1:dKGiiXo54bmREHu0T5BrC5Feeb3TSo/QcBtlNvdBzQI=
 gitlab.com/projectreferral/util v0.0.0-20200623155323-9cbd1696e645/go.mod h1:LbAMpcNUKK40/kQh2W5k2IWcoBF985/CZjNVeDHkDKA=
+gitlab.com/projectreferral/util v0.0.0-20201018172522-504d11fb9afc h1:dTmJN038PpRp1rvdWpFjCXjwhxbkwTkp2Z1pC5fIXpg=
+gitlab.com/projectreferral/util v0.0.0-20201018172522-504d11fb9afc/go.mod h1:LbAMpcNUKK40/kQh2W5k2IWcoBF985/CZjNVeDHkDKA=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/net v0.0.0-20200202094626-16171245cfb2 h1:CCH4IOTTfewWjGOlSp+zGcjutRKlBEZQ6wTn8ozI/nI=
 golang.org/x/net v0.0.0-20200202094626-16171245cfb2/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
